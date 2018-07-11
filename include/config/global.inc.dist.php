@@ -265,6 +265,15 @@ $config['confirmations'] = 120;
 $config['network_confirmations'] = 120;
 
 /**
+ * Coin settings
+ *  Avoid too many blocks, causing the data to be too large to pay.
+ *
+ */
+$config['subsidy_halving_interval'] = 840000;
+$config['first_block_coin'] = 50;
+$config['max_transaction_block'] = 125;
+
+/**
  * PPS
  *  Pay Per Share configuration details
  *   https://github.com/MPOS/php-mpos/wiki/Config-Setup#pps-settings
