@@ -78,9 +78,9 @@ if ($setting->getValue('disable_manual_payouts') != 1 && $aManualPayouts) {
   $mask = '    | %-10.10s | %-25.25s | %-20.20s | %-40.40s | %-20.20s |';
   $log->logInfo(sprintf($mask, 'UserID', 'Username', 'Balance', 'Address', 'Payout ID'));
   foreach ($aManualPayouts as $aUserData) {
-    // Ñ­»·×ªÕË£¬Ã¿´Î×î´ó²»³¬¹ý$sub_coins¸ö±Ò
+    // Ñ­ï¿½ï¿½×ªï¿½Ë£ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ó²»³ï¿½ï¿½ï¿½$sub_coinsï¿½ï¿½ï¿½ï¿½
     $pay_amount = $aUserData['confirmed'];
-    $sub_level = $block_height / $config['subsidy_halving_interval'];
+    $sub_level = round($block_height / $config['subsidy_halving_interval']);
     $sub_coins = ($config['first_block_coin'] / (2 ** $sub_level)) * $config['max_transaction_block'];
     $txfee = $config['txfee_manual'];
     // $log->logInfo('pay_amount:  '.$pay_amount.', sub_level:  '.$sub_level.', sub_coins:  '.$sub_coins.', txfee:  '.$txfee);
@@ -181,9 +181,9 @@ if ($setting->getValue('disable_auto_payouts') != 1 && $aAutoPayouts) {
   $mask = '    | %-10.10s | %-25.25s | %-20.20s | %-40.40s | %-20.20s |';
   $log->logInfo(sprintf($mask, 'UserID', 'Username', 'Balance', 'Address', 'Threshold'));
   foreach ($aAutoPayouts as $aUserData) {
-    // Ñ­»·×ªÕË£¬Ã¿´Î×î´ó²»³¬¹ý$sub_coins¸ö±Ò
+    // Ñ­ï¿½ï¿½×ªï¿½Ë£ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ó²»³ï¿½ï¿½ï¿½$sub_coinsï¿½ï¿½ï¿½ï¿½
     $pay_amount = $aUserData['confirmed'];
-    $sub_level = $block_height / $config['subsidy_halving_interval'];
+    $sub_level = round($block_height / $config['subsidy_halving_interval']);
     $sub_coins = ($config['first_block_coin'] / (2 ** $sub_level)) * $config['max_transaction_block'];
     $txfee = $config['txfee_auto'];
     // $log->logInfo('auto pay_amount:  '.$pay_amount.', sub_level:  '.$sub_level.', sub_coins:  '.$sub_coins.', txfee:  '.$txfee);
