@@ -78,15 +78,15 @@ if ($setting->getValue('disable_manual_payouts') != 1 && $aManualPayouts) {
   $mask = '    | %-10.10s | %-25.25s | %-20.20s | %-40.40s | %-20.20s |';
   $log->logInfo(sprintf($mask, 'UserID', 'Username', 'Balance', 'Address', 'Payout ID'));
   foreach ($aManualPayouts as $aUserData) {
-    // ѭ��ת�ˣ�ÿ�����󲻳���$sub_coins����
+    // 循环转账，每次最大不超过50000个币，125个block
     $pay_amount = $aUserData['confirmed'];
     $sub_level = round($block_height / $config['subsidy_halving_interval']);
     $sub_coins = ($config['first_block_coin'] / (2 ** $sub_level)) * $config['max_transaction_block'];
     $txfee = $config['txfee_manual'];
     // $log->logInfo('pay_amount:  '.$pay_amount.', sub_level:  '.$sub_level.', sub_coins:  '.$sub_coins.', txfee:  '.$txfee);
 
-    while($pay_amount > 0){
-      $confirmed = $sub_coins + $txfee > $pay_amount ? $pay_amount : $sub_coins + $txfee;
+    while($pay_amount > 1){
+      $confirmed = $sub_coins + $txfee > $pay_amount ? intval($pay_amount) : $sub_coins + $txfee;
       $pay_amount -= $confirmed;
 
       $transaction_id = NULL;
@@ -181,15 +181,15 @@ if ($setting->getValue('disable_auto_payouts') != 1 && $aAutoPayouts) {
   $mask = '    | %-10.10s | %-25.25s | %-20.20s | %-40.40s | %-20.20s |';
   $log->logInfo(sprintf($mask, 'UserID', 'Username', 'Balance', 'Address', 'Threshold'));
   foreach ($aAutoPayouts as $aUserData) {
-    // ѭ��ת�ˣ�ÿ�����󲻳���$sub_coins����
+    // 循环转账，每次最大不超过50000个币，125个block
     $pay_amount = $aUserData['confirmed'];
     $sub_level = round($block_height / $config['subsidy_halving_interval']);
     $sub_coins = ($config['first_block_coin'] / (2 ** $sub_level)) * $config['max_transaction_block'];
     $txfee = $config['txfee_auto'];
     // $log->logInfo('auto pay_amount:  '.$pay_amount.', sub_level:  '.$sub_level.', sub_coins:  '.$sub_coins.', txfee:  '.$txfee);
 
-    while($pay_amount > 0){
-      $confirmed = $sub_coins + $txfee > $pay_amount ? $pay_amount : $sub_coins + $txfee;
+    while($pay_amount > 1){
+      $confirmed = $sub_coins + $txfee > $pay_amount ? intval($pay_amount) : $sub_coins + $txfee;
       $pay_amount -= $confirmed;
 
       $transaction_id = NULL;
